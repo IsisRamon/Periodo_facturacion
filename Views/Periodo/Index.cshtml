@@ -18,7 +18,7 @@
                         <div class="form-group">
                             <label for="FechaInicial" class="form-label">Fecha inicial</label>
                             <div class='input-group date'>
-                                <input type='date' class="form-control" id="FechaInicial" name="FechaInicial" value="@Model.FechaInicial" />
+                                <input type='date' class="form-control" id="FechaInicial" name="FechaInicial" value="@Model.FechaInicial"  required pattern="\d{2}/\d{2}/\d{4}" />
                             </div>
                         </div>
                     </div>
@@ -26,7 +26,7 @@
                         <div class="form-group">
                             <label for="FechaFinal" class="form-label">Fecha final</label>
                             <div class='input-group date'>
-                                <input type='date' class="form-control" id="FechaFinal" name="FechaFinal" value="@Model.FechaFinal" />
+                                <input type='date' class="form-control" id="FechaFinal" name="FechaFinal" value="@Model.FechaFinal" required />
                             </div>
                         </div>
                     </div>
@@ -35,19 +35,20 @@
                     <div class="col-md-10">
                         <div class="form-group">
                             <label for="periodoSelect" class="form-label">Periodo</label>
-                            <select id="periodo" class="form-select" aria-label="Selecciona un periodo">
-                                <option id="1" name="Periodicidad" value="@Model.Periodicidad">Mensual</option>
-                                <option id="2" name="Periodicidad" value="@Model.Periodicidad">Bimestral</option>
-                                <option id="3" name="Periodicidad" value="@Model.Periodicidad">Semestral</option>
-                                <option id="4" name="Periodicidad" value="@Model.Periodicidad">Anual</option>
+                            <select  id="periodo" name="Periodicidad" value="@Model.Periodicidad" class="form-select" aria-label="Selecciona un periodo">
+                                <option value="1">Mensual</option>
+                                <option value="2">Bimestral</option>
+                                <option value="3">Semestral</option>
+                                <option value="4">Anual</option>
                             </select>
                         </div>
                     </div>
 
+
                     <div class="col-md-10">
                         <div class="form-group">
                             <label for="diaCorte" class="form-label">Día de corte </label>
-                            <input class="form-control" type="number" id="DiaCorte" name="DiaCorte" value="@Model.DiaCorte" min="1" max="31" placeholder="" aria-label="default input example">
+                            <input class="form-control" type="number" id="DiaCorte" name="DiaCorte" value="@Model.DiaCorte" min="1" max="31" placeholder="" aria-label="default input example" required>
                         </div>
                     </div>
 
@@ -55,7 +56,7 @@
                     <div class="col-md-10">
                         <div class="form-group">
                             <label for="diaImpresion" class="form-label">Día de impresión </label>
-                            <input class="form-control" type="number" id="DiaImpresion" name="DiaImpresion" value="@Model.DiaImpresion" min="1" max="31" placeholder="" aria-label="default input example">
+                            <input class="form-control" type="number" id="DiaImpresion" name="DiaImpresion" value="@Model.DiaImpresion" min="1" max="31" placeholder="" aria-label="default input example" required>
                         </div>
                     </div>
 

@@ -10,7 +10,7 @@ namespace Periodo_facturacion.Models
     {
         public string FechaInicial { get; set; }
         public string FechaFinal { get; set; }
-        public string Periodicidad { get; set; }
+        public int Periodicidad { get; set; }
 
         public int DiaCorte { get; set; }
         public int DiaImpresion { get; set; }
@@ -20,19 +20,5 @@ namespace Periodo_facturacion.Models
         public string FechasInicioAll { get; set; }
 
         public string FechaImpresion { get; set; }
-
-
-        /* public List<FechasModelClass> FechasLIst { get; set; }
-
-     }
-     public class FechasModelClass
-     {
-         public string FechasFinalAll { get; set; }
-         public string FechasInicioAll { get; set; }
-
-         public string FechaImpresion { get; set; }
-
-     }
-        */
     }
 }
