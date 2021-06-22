@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Periodo_facturacion", "Periodo_facturacion.csproj", "{FA4B81F8-BB8A-44F5-AD60-26C0D9CC639F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FA4B81F8-BB8A-44F5-AD60-26C0D9CC639F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA4B81F8-BB8A-44F5-AD60-26C0D9CC639F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA4B81F8-BB8A-44F5-AD60-26C0D9CC639F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA4B81F8-BB8A-44F5-AD60-26C0D9CC639F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EC83C7A9-702B-4031-A992-6F1F39B41C98}
+	EndGlobalSection
+EndGlobal

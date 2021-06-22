@@ -1,0 +1,77 @@
+﻿@model Periodo_facturacion.Models.Periodo
+@{
+    ViewBag.Title = "Index";
+}
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <div class="row">
+        @using (Html.BeginForm("/Index", "Periodo", FormMethod.Post))
+        {
+        <div class="form-horizontal ">
+            <h1 class="display-4">Calendario de facturación</h1>
+            <div class="container">
+                <div class="row">
+                    <div class='col-md-10'>
+                        <div class="form-group">
+                            <label for="FechaInicial" class="form-label">Fecha inicial</label>
+                            <div class='input-group date'>
+                                <input type='date' class="form-control" id="FechaInicial" name="FechaInicial" value="@Model.FechaInicial" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class='col-md-10'>
+                        <div class="form-group">
+                            <label for="FechaFinal" class="form-label">Fecha final</label>
+                            <div class='input-group date'>
+                                <input type='date' class="form-control" id="FechaFinal" name="FechaFinal" value="@Model.FechaFinal" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-10">
+                        <div class="form-group">
+                            <label for="periodoSelect" class="form-label">Periodo</label>
+                            <select id="periodo" class="form-select" aria-label="Selecciona un periodo">
+                                <option id="1" name="Periodicidad" value="@Model.Periodicidad">Mensual</option>
+                                <option id="2" name="Periodicidad" value="@Model.Periodicidad">Bimestral</option>
+                                <option id="3" name="Periodicidad" value="@Model.Periodicidad">Semestral</option>
+                                <option id="4" name="Periodicidad" value="@Model.Periodicidad">Anual</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-10">
+                        <div class="form-group">
+                            <label for="diaCorte" class="form-label">Día de corte </label>
+                            <input class="form-control" type="number" id="DiaCorte" name="DiaCorte" value="@Model.DiaCorte" min="1" max="31" placeholder="" aria-label="default input example">
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-10">
+                        <div class="form-group">
+                            <label for="diaImpresion" class="form-label">Día de impresión </label>
+                            <input class="form-control" type="number" id="DiaImpresion" name="DiaImpresion" value="@Model.DiaImpresion" min="1" max="31" placeholder="" aria-label="default input example">
+                        </div>
+                    </div>
+
+
+                    <button class="btn btn-primary" type="submit" id="generar " value="generar" name="generarPeriodo">Generar periodos</button>
+                </div>
+
+               
+
+            </div>
+          
+
+            </div>
+        }
+       
+
+    </div>
+</body>
+</html>

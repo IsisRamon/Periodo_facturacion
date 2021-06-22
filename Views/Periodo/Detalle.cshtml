@@ -1,0 +1,36 @@
+﻿@model List<Periodo_facturacion.Models.Periodo>     
+@{
+    ViewBag.Title = "Detalle";
+}
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-6">
+
+            <table class="table">
+                <tr>
+                    <th>Fecha inicio</th>
+                    <th>Fecha final</th>
+                    <th>Fecha impresion</th>
+                </tr>
+
+                @{
+                    foreach (var lista in Model)
+                    {
+                        <tr>
+                            <td>@lista.FechasInicioAll</td>
+                            <td>@lista.FechasFinalAll</td>
+                            <td>@lista.FechaImpresion</td>
+
+                        </tr>
+                    }
+                }
+            </table>
+
+        </div>
+    </div>
+</body>
+</html>
