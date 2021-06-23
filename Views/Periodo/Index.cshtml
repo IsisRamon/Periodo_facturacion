@@ -18,7 +18,7 @@
                         <div class="form-group">
                             <label for="FechaInicial" class="form-label">Fecha inicial</label>
                             <div class='input-group date'>
-                                <input type='date' class="form-control" id="FechaInicial" name="FechaInicial" value="@Model.FechaInicial"  required pattern="\d{2}/\d{2}/\d{4}" />
+                                <input type='date' class="form-control" id="FechaInicial" name="FechaInicial" value="@Model.FechaInicial" required pattern="\d{2}/\d{2}/\d{4}" />
                             </div>
                         </div>
                     </div>
@@ -35,7 +35,7 @@
                     <div class="col-md-10">
                         <div class="form-group">
                             <label for="periodoSelect" class="form-label">Periodo</label>
-                            <select  id="periodo" name="Periodicidad" value="@Model.Periodicidad" class="form-select" aria-label="Selecciona un periodo">
+                            <select id="periodo" name="Periodicidad" value="@Model.Periodicidad" class="form-select" aria-label="Selecciona un periodo">
                                 <option value="1">Mensual</option>
                                 <option value="2">Bimestral</option>
                                 <option value="3">Semestral</option>
@@ -61,7 +61,15 @@
                     </div>
 
 
-                    <button class="btn btn-primary" type="submit" id="generar " value="generar" name="generarPeriodo">Generar periodos</button>
+                    <div class="col-md-10">
+                        <div class="form-group">
+
+
+                            <button class="btn btn-primary" type="submit" id="generar " value="generar" name="generarPeriodo">Generar periodos</button>
+                        </div>
+                    </div>
+
+
                 </div>
 
                
