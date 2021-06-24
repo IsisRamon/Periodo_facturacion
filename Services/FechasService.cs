@@ -32,12 +32,13 @@ namespace Periodo_facturacion.Services
 
                 if (p.Periodicidad == 1)//mensual
                 {
+                    _primerdiames = new DateTime(_fechainicial.Year, _fechainicial.Month, 1);
+           
+                    _ultimodiames = _primerdiames.AddMonths(1).AddDays(-1); //aumentarle dias en caso de sea otro periodo 1/2/6/12
 
-                    if (_fechainicial.Day<p.DiaCorte)
-                    {
-                        _primerdiames = new DateTime(_fechainicial.Year, _fechainicial.Month, 1);
-                        _ultimodiames = _primerdiames.AddMonths(1).AddDays(-1);
-                        if (p.DiaCorte > _ultimodiames.Day)
+                    if (_fechainicial.Day < p.DiaCorte)
+                    {                 
+                        if (p.DiaCorte >= _ultimodiames.Day) //ver si es >= o solo >
                         {
                             _auxfin = new DateTime(_fechainicial.Year, _fechainicial.Month, _ultimodiames.Day);
                         }
@@ -46,68 +47,183 @@ namespace Periodo_facturacion.Services
                             _auxfin = new DateTime(_fechainicial.Year, _fechainicial.Month, p.DiaCorte);
                         }
                     }
-                    else
+                    else if (_fechainicial.Day > p.DiaCorte)
                     {
 
-                    }
-
-                    parts.Add(new Periodo() { FechasInicioAll = "" + _fechainicial.ToString("dd/MM/yyyy"), FechasFinalAll = "" + _auxfin.ToString("dd/MM/yyyy"), FechaImpresion = "" + _fechaimp.ToString("dd/MM/yyyy") });
-                    _fechainicial = _auxfin.AddDays(1);
-                    //---------------------------------------------------------------------------------------------------------
-
-                    //si el dia de fecha inicio es == dia corte
-                    /*
-
-                    if (_fechainicial.Day < p.DiaCorte ) //si el dia de la fecha inicial es MAYOR al dia de Corte
-                    {
-                         _primerdiames = new DateTime(_fechainicial.Year, _fechainicial.Month, 1);
-                        _ultimodiames = _primerdiames.AddMonths(1).AddDays(-1);
-
-                        if (p.DiaCorte > _ultimodiames.Day)
+                        if (p.DiaCorte >= _ultimodiames.Day)
                         {
-                            _auxfin= new DateTime(_fechainicial.Year, _fechainicial.Month,_ultimodiames.Day);
+                            _auxfin = new DateTime(_fechainicial.Year, _fechainicial.Month + 1, _ultimodiames.Day);
                         }
                         else
                         {
-                            _auxfin = new DateTime(_fechainicial.Year, _fechainicial.Month, p.DiaCorte);
+                            _primerdiames = new DateTime(_fechainicial.Year, _fechainicial.Month+1, 1);
+                            _ultimodiames = _primerdiames.AddMonths(2).AddDays(-1); //aumentarle dias en caso de sea otro periodo 1/2/6/12
+
+                            if(p.DiaCorte >= _ultimodiames.Day)
+                            {
+                                _auxfin = new DateTime(_fechainicial.Year, _fechainicial.Month + 1, _ultimodiames.Day);
+                            }
+                            else
+                            {
+                                _auxfin = new DateTime(_fechainicial.Year, _fechainicial.Month + 1, p.DiaCorte);
+                            }
+                           
                         }
-
-
-                       // original _auxfin = new DateTime(_fechainicial.Year, _fechainicial.Month, p.DiaCorte);
-                        //_auxfin = new DateTime(_fechainicial.Year, _fechainicial.Month + 1, p.DiaCorte);
                     }
-                    else
+                    else if(_fechainicial.Day==p.DiaCorte)
                     {
-                         _primerdiames = new DateTime(_fechainicial.Year, _fechainicial.Month, 1);
-                        _ultimodiames = _primerdiames.AddMonths(1).AddDays(-1);
-                        if (p.DiaCorte >= _ultimodiames.Day )
+                        _primerdiames = new DateTime(_fechainicial.Year, _fechainicial.Month + 1, 1);
+                        _ultimodiames = _primerdiames.AddMonths(2).AddDays(-1);
+                        if (p.DiaCorte >= _ultimodiames.Day) //ver si es >= o solo >
                         {
                             _auxfin = new DateTime(_fechainicial.Year, _fechainicial.Month+1, _ultimodiames.Day);
                         }
                         else
                         {
-                            ////////
                             _auxfin = new DateTime(_fechainicial.Year, _fechainicial.Month+1, p.DiaCorte);
                         }
-                      //  _auxfin = new DateTime(_fechainicial.Year, _fechainicial.Month + 1, p.DiaCorte);
                     }
 
-
-                    //si dia de corte es = o mayor DIasdelmes ENTONCES Fecha final =Ultimo dia de mes
+                    _fechaimp = new DateTime(_auxfin.Year, _auxfin.Month, p.DiaImpresion);
 
                     if (_auxfin >= _fechafinal)
                     {
-                        _auxfin = _fechafinal;
-                    }
+                        if(p.DiaCorte==_fechafinal.Day)
+                        {
+                            _auxfin = _fechafinal;
+                        }
+                        else if (_auxfin.Month>=_fechafinal.Month && _auxfin.Day>=p.DiaCorte )
+                        {
+
+                            _fechainicial = _fechainicial.AddMonths(-1);
+                            if(_fechainicial.Month==2)
+                            {
+                                _fechainicial = _fechainicial.AddDays(1);
+                            }
+                           
+                            _auxfin = _fechafinal;
+                            _fechaimp = _fechafinal;
+
+                        }
+                        else
+                        {
+                            _auxfin = _fechafinal;
+                            _fechaimp = _fechafinal;
+                        }
+                    } 
 
                     parts.Add(new Periodo() { FechasInicioAll = "" + _fechainicial.ToString("dd/MM/yyyy"), FechasFinalAll = "" + _auxfin.ToString("dd/MM/yyyy"), FechaImpresion = "" + _fechaimp.ToString("dd/MM/yyyy") });
                     _fechainicial = _auxfin.AddDays(1);
-                    */
+
                 }
                 else if (p.Periodicidad == 2)//bimestral    
                 {
+                    _primerdiames = new DateTime(_fechainicial.Year, _fechainicial.Month, 1);
+                    
+                    _ultimodiames = _primerdiames.AddMonths(2).AddDays(-1); //aumentarle dias en caso de sea otro periodo 1/2/6/12   //
 
-                    if (_fechainicial.Day < p.DiaCorte) //si el dia de la fecha inicial es MAYOR al dia de Corte
+                    if (_fechainicial.Day < p.DiaCorte)
+                    {                 
+                        if (p.DiaCorte >= _ultimodiames.Day) //ver si es >= o solo >
+                        {
+                            _auxfin = new DateTime(_fechainicial.Year, _fechainicial.Month+1, _ultimodiames.Day);
+                        }
+                        else
+                        {
+                            _auxfin = new DateTime(_fechainicial.Year, _fechainicial.Month+1, p.DiaCorte);
+                        }
+                    }
+                    else if (_fechainicial.Day > p.DiaCorte)
+                    {
+
+                        if (p.DiaCorte >= _ultimodiames.Day)
+                        {
+                            _auxfin = new DateTime(_fechainicial.Year, _fechainicial.Month + 2, _ultimodiames.Day);
+                        }
+                        else
+                        {
+                            _primerdiames = new DateTime(_fechainicial.Year, _fechainicial.Month+2, 1);
+                            _ultimodiames = _primerdiames.AddMonths(2).AddDays(-1); //aumentarle dias en caso de sea otro periodo 1/2/6/12
+
+                            if(p.DiaCorte >= _ultimodiames.Day)
+                            {
+                                _auxfin = new DateTime(_fechainicial.Year, _fechainicial.Month + 2, _ultimodiames.Day);
+                            }
+                            else
+                            {
+                                _auxfin = new DateTime(_fechainicial.Year, _fechainicial.Month + 2, p.DiaCorte);
+                            }
+                           
+                        }
+                    }
+                    else if(_fechainicial.Day==p.DiaCorte)
+                    {
+                        _primerdiames = new DateTime(_fechainicial.Year, _fechainicial.Month + 1, 1);
+                        _ultimodiames = _primerdiames.AddMonths(3).AddDays(-1);
+                        if (p.DiaCorte >= _ultimodiames.Day) //ver si es >= o solo >
+                        {
+                            _auxfin = new DateTime(_fechainicial.Year, _fechainicial.Month+2, _ultimodiames.Day);
+                        }
+                        else
+                        {
+                            _auxfin = new DateTime(_fechainicial.Year, _fechainicial.Month+2, p.DiaCorte);
+                        }
+                    }
+
+                    _fechaimp = new DateTime(_auxfin.Year, _auxfin.Month, p.DiaImpresion);
+
+                    if (_auxfin >= _fechafinal)
+                    {
+                        if(p.DiaCorte==_fechafinal.Day)
+                        {
+                            _auxfin = _fechafinal;
+                        }
+                        else if (_auxfin.Month>=_fechafinal.Month && _auxfin.Day>=p.DiaCorte )
+                        {
+
+                            _fechainicial = _fechainicial.AddMonths(-1);
+                            if(_fechainicial.Month==2)
+                            {
+                                _fechainicial = _fechainicial.AddDays(1);
+                            }
+                           
+                            _auxfin = _fechafinal;
+                            _fechaimp = _fechafinal;
+
+                        }
+                        else
+                        {
+                            _auxfin = _fechafinal;
+                            _fechaimp = _fechafinal;
+                        }
+                    } 
+
+                    parts.Add(new Periodo() { FechasInicioAll = "" + _fechainicial.ToString("dd/MM/yyyy"), FechasFinalAll = "" + _auxfin.ToString("dd/MM/yyyy"), FechaImpresion = "" + _fechaimp.ToString("dd/MM/yyyy") });
+                    _fechainicial = _auxfin.AddDays(1);
+
+                }
+                else if (p.Periodicidad == 3)//semestral
+                {
+                    
+                }
+                else if (p.Periodicidad == 4)//anual
+                {
+                  
+                }
+            } while ((_fechainicial) <= ( _fechafinal));
+
+
+            return parts;
+           
+        }
+    }
+
+}
+
+/*
+ 
+
+  if (_fechainicial.Day < p.DiaCorte) //si el dia de la fecha inicial es MAYOR al dia de Corte
                     {
                         _primerdiames = new DateTime(_fechainicial.Year, _fechainicial.Month, 1);
                         _ultimodiames = _primerdiames.AddMonths(2).AddDays(-1);
@@ -148,93 +264,5 @@ namespace Periodo_facturacion.Services
 
                     parts.Add(new Periodo() { FechasInicioAll = "" + _fechainicial.ToString("dd/MM/yyyy"), FechasFinalAll = "" + _auxfin.ToString("dd/MM/yyyy"), FechaImpresion = "" + _fechaimp.ToString("dd/MM/yyyy") });
                     _fechainicial = _auxfin.AddDays(1);
+*/
 
-                }
-                else if (p.Periodicidad == 3)//semestral
-                {
-                    if (_fechainicial.Day < p.DiaCorte) //si el dia de la fecha inicial es MAYOR al dia de Corte
-                    {
-                        _primerdiames = new DateTime(_fechainicial.Year, _fechainicial.Month, 1);
-                        _ultimodiames = _primerdiames.AddMonths(1).AddDays(-1);
-
-                        if (p.DiaCorte > _ultimodiames.Day)
-                        {
-                            _auxfin = new DateTime(_fechainicial.Year, _fechainicial.Month, _ultimodiames.Day);
-                        }
-                        else
-                        {
-                            _auxfin = new DateTime(_fechainicial.Year, _fechainicial.Month, p.DiaCorte);
-                        }
-                    }
-                    else
-                    {
-                        _primerdiames = new DateTime(_fechainicial.Year, _fechainicial.Month, 1);
-                        _ultimodiames = _primerdiames.AddMonths(1).AddDays(-1);
-                        if (p.DiaCorte >= _ultimodiames.Day)
-                        {
-                            _auxfin = new DateTime(_fechainicial.Year, _fechainicial.Month + 1, _ultimodiames.Day);
-                        }
-                        else
-                        {
-                            ////////
-                            _auxfin = new DateTime(_fechainicial.Year, _fechainicial.Month + 1, p.DiaCorte);
-                        }
-                    }
-
-                    if (_auxfin >= _fechafinal)
-                    {
-                        _auxfin = _fechafinal;
-                    }
-
-                    parts.Add(new Periodo() { FechasInicioAll = "" + _fechainicial.ToString("dd/MM/yyyy"), FechasFinalAll = "" + _auxfin.ToString("dd/MM/yyyy"), FechaImpresion = "" + _fechaimp.ToString("dd/MM/yyyy") });
-                    _fechainicial = _auxfin.AddDays(1);
-                }
-                else if (p.Periodicidad == 4)//anual
-                {
-                    if (_fechainicial.Day < p.DiaCorte) //si el dia de la fecha inicial es MAYOR al dia de Corte
-                    {
-                        _primerdiames = new DateTime(_fechainicial.Year, _fechainicial.Month, 1);
-                        _ultimodiames = _primerdiames.AddMonths(1).AddDays(-1);
-
-                        if (p.DiaCorte > _ultimodiames.Day)
-                        {
-                            _auxfin = new DateTime(_fechainicial.Year, _fechainicial.Month, _ultimodiames.Day);
-                        }
-                        else
-                        {
-                            _auxfin = new DateTime(_fechainicial.Year, _fechainicial.Month, p.DiaCorte);
-                        }
-                    }
-                    else
-                    {
-                        _primerdiames = new DateTime(_fechainicial.Year, _fechainicial.Month, 1);
-                        _ultimodiames = _primerdiames.AddMonths(1).AddDays(-1);
-                        if (p.DiaCorte >= _ultimodiames.Day)
-                        {
-                            _auxfin = new DateTime(_fechainicial.Year, _fechainicial.Month + 1, _ultimodiames.Day);
-                        }
-                        else
-                        {
-                            ////////
-                            _auxfin = new DateTime(_fechainicial.Year, _fechainicial.Month + 1, p.DiaCorte);
-                        }
-                    }
-
-                    if (_auxfin >= _fechafinal)
-                    {
-                        _auxfin = _fechafinal;
-                    }
-
-                    parts.Add(new Periodo() { FechasInicioAll = "" + _fechainicial.ToString("dd/MM/yyyy"), FechasFinalAll = "" + _auxfin.ToString("dd/MM/yyyy"), FechaImpresion = "" + _fechaimp.ToString("dd/MM/yyyy") });
-                    _fechainicial = _auxfin.AddDays(1);
-
-                }
-            } while ((_fechainicial) <= ( _fechafinal));
-
-
-            return parts;
-           
-        }
-    }
-
-}
